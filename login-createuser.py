@@ -35,7 +35,7 @@ def login(users):
     while loggedOut:
         #Alternativ skapa användare/ logga in befintlig användare
         login = {"l":"Log into existing user", "c":"Create new user", "d":"Delete user", "q":"Quit"}
-        lgn = menu("Log in", "", login)
+        lgn = menu("", "", login)
         if lgn == 'l':
             while True:
                 #Tar användarens input i form av inloggningsuppgifter
