@@ -1,20 +1,20 @@
 import json
 import sys
+import os
 
-def default(file):
-    if not os.path.exists(filename):
-        file(filename, 'w').close()
+def default(filepath):
+    if not os.path.exists(filepath):
+        file = open(filepath, 'x')
+        file.write("{}")
+        file.close()
 
-def write(file, dictionary):
-    with open(file,"w") as f:
+def write(filepath, dictionary):
+    with open(filepath,"w") as f:
         f.writelines(json.dumps(dictionary))
 
-def read(file):
-    file = open(file,"r")
+def read(filepath):
+    file = open(filepath,"r")
     return json.loads(file.read())
-
-users = read("users.txt")
-userList = read("userlist.txt")
 
 def menu(title,prompt,options):
     print(title)
@@ -31,7 +31,7 @@ def quit():
     print("Shutting down...")
     write("users.txt", users)
     write("userlist.txt", userList)
-    sys.exit("Program terminated")
+    sys.exit(0)
             
 def login(users):
     loggedOut = True
@@ -106,6 +106,11 @@ def login(users):
             quit()
             loggedOut = False
 def run():
-   user = login(users)
+    default("users.txt")
+    global users
+    global userList
+    users = read("users.txt")
+    userList = read("userlist.txt")
+    user = login(users)
 
 run()              
