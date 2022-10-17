@@ -1,6 +1,10 @@
 import json
 import sys
 
+def default(file):
+    if not os.path.exists(filename):
+        file(filename, 'w').close()
+
 def write(file, dictionary):
     with open(file,"w") as f:
         f.writelines(json.dumps(dictionary))
@@ -14,7 +18,6 @@ userList = read("userlist.txt")
 
 def menu(title,prompt,options):
     print(title)
-    print()
     for option in options:
         print(f" {option}) {options[option]}")
     print()
@@ -58,13 +61,20 @@ def login(users):
                         
         #Skapa ny användare med tillhörande lista
         elif lgn == 'c':
-            print()
-            print("Create new user")
-            print()
-            user = input("Choose a username: ")
-            users[user] = input("Choose a password: ")
-            print()
-            userList[user] = []
+            while True:
+                print()
+                print("Create new user")
+                print()
+                user = input("Choose a username: ")
+                print()
+                if user in users:
+                    print("Username already taken.")
+                    break
+                else:
+                    users[user] = input("Choose a password: ")
+                    print()
+                    userList[user] = []
+                    break
         #Ta bort användare
         elif lgn == 'd':
             print()
@@ -95,5 +105,7 @@ def login(users):
         elif lgn == 'q':
             quit()
             loggedOut = False
-                
-user = login(users)
+def run():
+   user = login(users)
+
+run()              
