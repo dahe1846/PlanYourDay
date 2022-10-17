@@ -229,14 +229,16 @@ def remove_act(xs):
     
     
 
-opt = {"a":"Add activity", "r":"Remove activity"}
+
 def edit_list(xs):
     print()
+    opt = {"a":"Add activity", "r":"Remove activity", "s":"Save list"}
     aor = menu("Edit list", "Option: ", opt)
     if aor == "a":
         add_act(xs)
     elif aor == "r":
         remove_act(xs)
+    
     
     
     
