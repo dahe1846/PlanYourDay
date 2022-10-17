@@ -113,7 +113,7 @@ def date():
     
     return dateWOT
         
-options = {"y":"Yes", "n":"No"}        
+       
 def menu(title, prombt, options):
     print(title)
     print()
@@ -133,9 +133,10 @@ def listx():
 
 #Lägg till en aktivitet kopplat till ett datum
 def add_activities():
+    list_with_dates = listx()
     while True:
+        options = {"y":"Yes", "n":"No"} 
         question = menu("Do you want to add an activity?", "[y/n]: ", options)
-        list_with_dates = listx()
         list_with_dates.sort()
         if question == "y":
             print()
@@ -198,6 +199,7 @@ def remove_act(xs):
         print()
         print("Your activities:")
         print()
+        xs.sort()
         for x in range(len(xs)):
             dat, act = xs[x]
             print(f"  {x+1}) {dat}: {act}")
@@ -213,7 +215,7 @@ def remove_act(xs):
         print()
         while True:
             rem = input(f"(1-{len(xs)}): ")
-            if rem.isnumeric() and int(rem) >= 0 and int(rem) <= (len(xs) + 1):
+            if rem.isnumeric() and int(rem) >= 1 and int(rem) <= (len(xs)):
                 xs.remove(xs[int(rem)-1])
                 print()
                 print("Your activities")
@@ -246,7 +248,10 @@ def create_and_edit_list():
     while True:
         edit_list(datelist)
     
-
+    
+    
+    
+    
 create_and_edit_list() 
 
 
