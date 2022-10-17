@@ -107,6 +107,7 @@ def login(users):
             loggedOut = False
 def run():
     default("users.txt")
+    default("userlist.txt")
     global users
     global userList
     users = read("users.txt")
