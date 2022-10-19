@@ -144,6 +144,19 @@ def menu(title, prombt, options):
             break
     return fråga 
     print()
+    
+
+def dateToDict(d):
+    val = {}
+    
+    val["year"] = d.year
+    val["month"] = d.month
+    val["day"] = d.day
+    
+    return val
+
+def dictToDate(dic):
+    return datetime.date(dic["year"], dic["month"], dic["day"])
 
 #Lägg till en aktivitet kopplat till ett datum
 def add_activities(xs):
@@ -159,7 +172,7 @@ def add_activities(xs):
             print("When is the activity?")
             print()
             dat = date()
-            xs.append((dat, act))
+            xs.append((dateToDict(dat), act))
             print()
             
             
@@ -169,8 +182,8 @@ def add_activities(xs):
             print("Your activities:")
             print()
             for x in range(len(xs)):
-                dat, act = xs[x] 
-                print(f"  {x+1}) {dat}: {act}")
+                dat, act = xs[x]
+                print(f"  {x+1}) {dictToDate(dat)}: {act}")
             return xs
             break
 
@@ -332,15 +345,16 @@ def login(users):
             quit()
             loggedOut = False
 
-#def create_or_edit_list():
-   # options = {"c":"Create new list", "e":"Edit list", "s":"Save and log out"}
-    #question = menu("". "Option", options)
-    #if question == "c":
-     #   userList[user] = add_activities(userList[user])
-    #elif question == "e":
+'''
+def create_or_edit_list():
+    options = {"c":"Create new list", "e":"Edit list", "s":"Save and log out"}
+    question = menu("". "Option", options)
+    if question == "c":
+        userList[user] = add_activities(userList[user])
+    elif question == "e":
         
-    #elif question == "s":
-
+    elif question == "s":
+'''
 
 def run():
     default("users.txt")
