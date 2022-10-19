@@ -242,13 +242,16 @@ def remove_act(xs):
 
 def edit_list(xs):
     print()
-    opt = {"a":"Add activity", "r":"Remove activity", "s":"Save list"}
-    aor = menu("Edit list", "Option: ", opt)
-    if aor == "a":
-        add_act(xs)
-    elif aor == "r":
-        remove_act(xs)
- 
+    while True:
+        opt = {"a":"Add activity", "r":"Remove activity", "s":"Save list"}
+        aor = menu("Edit list", "Option: ", opt)
+        if aor == "a":
+            add_act(xs)
+        elif aor == "r":
+            remove_act(xs)
+        elif aor == "s":
+            break
+     
  
             
 def quit():
@@ -332,27 +335,34 @@ def login(users):
             quit()
             loggedOut = False
 
-#def create_or_edit_list():
-   # options = {"c":"Create new list", "e":"Edit list", "s":"Save and log out"}
-    #question = menu("". "Option", options)
-    #if question == "c":
-     #   userList[user] = add_activities(userList[user])
-    #elif question == "e":
-        
-    #elif question == "s":
-
+def create_or_edit_list(user, xs):
+     while True:
+        options = {"c":"Create new list", "e":"Edit list", "s":"Save and log out"}
+        question = menu("Choose an action", "Option: ", options)
+        if question == "c":
+            userList[user] = []
+            userList[user] = add_activities(xs)
+            
+        elif question == "e":
+            edit_list(xs)  
+            
+        elif question == "s":
+            break
 
 def run():
     default("users.txt")
     default("userlist.txt")
     global users
     global userList
-    users = read("users.txt")
-    userList = read("userlist.txt")
+    while True:
+        users = read("users.txt")
+        userList = read("userlist.txt")
+        user = login(users)
+        print()	
+        if user == "q":
+            break
+        create_or_edit_list(user, userList[user])
     
-    user = login(users)
-    print()
-    userList[user] = add_activities(userList[user])
     
 
 
