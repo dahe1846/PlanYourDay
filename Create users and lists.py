@@ -5,6 +5,7 @@ import os
 
 months = {"JANUARY": 1, "FEBRUARY": 2, "MARS": 3, "APRIL": 4, "MAY": 5, "JUNE": 6, "JULY": 7, "AUGUST": 8,
           "SEPTEMBER": 9, "OCTOBER": 10, "NOVEMBER": 11, "DECEMBER": 12}
+
 months_with_31_days = {"JANUARY": 1, "MARS": 3, "MAY": 5, "JULY": 7, "AUGUST": 8, "OCTOBER": 10, "DECEMBER": 12}
 months_with_30_days = {"APRIL": 4, "JUNE": 6, "SEPTEMBER": 9, "NOVEMBER": 11}
 
@@ -39,20 +40,17 @@ def dateToDict(d):
     return val
 
 
-
 def dictToDate(dic):
     return datetime.date(dic["year"], dic["month"], dic["day"])
-
 
 def save_data():
     savelist = []
     for val in userList[user]:
         dat, act = val
         savelist.append((dateToDict(dat), act))
-    userList[user] = savelist    
+    userList[user] = savelist
     write("users.txt", users)
     write("userlist.txt", userList)
-
 
 
 def translate_list():
@@ -62,8 +60,7 @@ def translate_list():
         translate_list.append((dictToDate(dic), act))
     userList[user] = translate_list
     return userList[user]
-  
-        
+
 
 
 def day_in_month(month, day):
@@ -145,7 +142,7 @@ def leapyear_number(year, month, day):
 def date():
     while True:
         (year, month, day) = (
-        input("Year (Now-2099): "), input("Month (January-December) or (01-12): "), input("Day: "))
+            input("Year (Now-2099): "), input("Month (January-December) or (01-12): "), input("Day: "))
         if correct_year(year) and (day_in_month(month, day) or leapyear_string(year, month, day)):
             date = datetime.date(int(year), months[month.upper()], int(day))
             if correct_date(date):
@@ -174,6 +171,21 @@ def date():
     return date
 
 
+def activities():
+    while True:
+        acts = input("What activity do you want to add?: ")
+        if len(acts) > 100:
+            print()
+            print("Activity can´t be longer than 100 characters")
+            print()
+        elif acts.split() == []:
+            print()
+            print("You need to add an activity")
+            print()
+        else:
+            return acts
+
+
 def menu(title, prombt, options):
     print(title)
     print()
@@ -181,11 +193,10 @@ def menu(title, prombt, options):
         print(f"   {x}) {options[x]}")
     print()
     while True:
-        fråga = input(prombt)
-        if fråga in options:
+        question = input(prombt)
+        if question in options:
             break
-    return fråga
-    print()
+    return question
 
 
 def print_activities(xs):
@@ -204,7 +215,7 @@ def add_activities(xs):
         question = menu("Do you want to add an activity?", "[y/n]: ", options)
         if question == "y":
             print()
-            act = input("What activity do you want to add?: ")
+            act = activities()
             print()
             print()
             print("When is the activity?")
@@ -225,7 +236,7 @@ def add_activities(xs):
 # Lägg till en activitet till din lista
 def add_act(xs):
     print()
-    act = input("What activity do you want to add?: ")
+    act = activities()
     print()
     print()
     print("When is the activity?")
@@ -315,15 +326,15 @@ def login(users):
                 # Godkänd input
                 if user in users and password == users[user]:
                     loggedOut = False
+                    print()
                     print(f"Welcome {user}")
                     return user
                 # Felaktig input
                 if loggedOut:
-                    print("Invalid username or password")
                     options = {"r": "Try again", "b": "Back to main menu"}
-                    opt = menu("", "", options)
-                    print(f"Option: {opt}")
+                    opt = menu("Invalid username or password", "Option: ", options)
                     if opt == 'b':
+                        print()
                         break
 
         # Skapa ny användare med tillhörande lista
@@ -349,7 +360,7 @@ def login(users):
             if users == {}:
                 print("No users exist")
                 print()
-                
+
             else:
                 print("Users: *")
                 print()
@@ -357,7 +368,6 @@ def login(users):
                     print(f"* {_}")
                 print()
                 user = input("Select a user to remove: ")
-                print()
                 if user in users:
                     password = input(f"Enter the password for user {user}: ")
                     while True:
@@ -386,20 +396,24 @@ def login(users):
 
 
 def create_or_edit_list(user, xs):
-    print()
-    if userList[user] != []:
+    if userList[user] == []:
+        print("You have no list saved to this user")
+        print()
+    else:
         print_activities(xs)
+        
     while True:
         options = {"c": "Create new list", "e": "Edit list", "s": "Save and log out"}
         question = menu("Choose an action", "Option: ", options)
         if question == "c":
-            userList[user] = []
             print()
-            userList[user] = add_activities(xs)
+            xs.clear()
+            xs = add_activities(xs)
 
         elif question == "e":
             print()
             edit_list(xs)
+            print_activities(xs)
 
         elif question == "s":
             save_data()
